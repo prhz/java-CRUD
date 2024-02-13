@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" xmlsn:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        * {
+            font-family: Poppins, sans-serif;
+            --border-height: 1px;
+            --border-before-color: rgba(221, 221, 221, 0.39);
+            --border-after-color: #5891ff;
+            --input-hovered-color: #4985e01f;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(15, 15, 15);
+            color: white;
+        }
+
+        .container {
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 75px;
+            padding-bottom: 35px;
+            width: 600px;
+            height: 345px;
+            padding-top: 37.5px;
+            border-radius: 22.5px;
+            background: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 6px 45px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(3.8px);
+            -webkit-backdrop-filter: blur(3.8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            animation: window-anim .6s ease-out;
+        }
+
+        .title {
+            margin-block-start: 0px;
+            cursor: default;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        .input-container {
+            width: 100%;
+        }
+
+        .form-input {
+            color: #fff;
+            font-size: 1rem;
+            background-color: transparent;
+            width: 100%;
+            box-sizing: border-box;
+            padding-inline: 1px;
+            padding-block: 6px;
+            border: none;
+            border-bottom: var(--border-height) solid var(--border-before-color);
+            transition: .2s;
+        }
+
+        input[type="number"] {
+            -webkit-appearance: textfield;
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        .import-border {
+            position: absolute;
+            background: var(--border-after-color);
+            width: 0%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            transition: 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-bottom-color: var(--border-after-color);
+        }
+
+        .form-input:focus~.input-border {
+            width: 100%;
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 45px;
+            height: 35px;
+            border-radius: 10px;
+            border-width: 0;
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .btn:hover {
+            color: white;
+            background-color: #5891ff;
+        }
+
+        .show-password {
+            position: absolute;
+            z-index: 10;
+            margin-left: 94%;
+            margin-top: 6px;
+            filter: opacity(.3);
+            transition: .2s;
+            cursor: pointer;
+        }
+
+        #eye {
+            width: 25px;
+            height: 25px;
+            filter: grayscale(1);
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            transition: background-color 5000s ease-in-out 0s;
+            -webkit-text-fill-color: #ffffff;
+        }
+
+        .title-header,
+        form {
+            animation: content-anim 1s, ease-out;
+            filter: opacity(1)
+        }
+
+        .btn-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: right;
+        }
+
+        .return-btn {
+            width: 80px;
+            height: 35px;
+            margin-top: 10px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            color: rgb(0, 0, 0);
+            background-color: #ffffff;
+            transition: .3s;
+            cursor: pointer;
+        }
+
+        .return-btn:hover {
+            color: #fff;
+            background-color: #5891ff;
+        }
+
+        .return-href {
+            text-decoration: none;
+        }
+
+        .employee-info {
+            position: absolute;
+            z-index: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        @keyframes window-anim {
+            from {
+                height: 0px;
+            }
+        }
+
+        @keyframes content-anim {
+            0% {
+                filter: opacity(0);
+            }
+
+            50% {
+                filter: opacity(0);
+            }
+
+            100% {
+                filter: opacity(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="btn-container">
+        <a class="return-href" href="">
+            <button class="return-btn">
+                return
+            </button>
+        </a>
+    </div>
+    <div class="container">
+        <div class="title-header">
+            <h1 class="title">Update Employee</h1>
+        </div>
+        <form action="updateFunc" method="get">
+            <div class="input-container">
+                <input id="name-input" type="text" name="nome" class="form-input" autocomplete="off" placeholder="Name" th:value="${nome}"
+                    required oninvalid="this.setCustomValidity('Enter Employee Name Here')"
+                    oninput="this.setCustomValidity('')">
+                <span class="input-border"></span>
+            </div>
+            <div class="input-container">
+                <input id="age-input" type="number" name="idade" class="form-input" autocomplete="off" placeholder="Age" th:value="${idade}"
+                    required oninvalid="this.setCustomValidity('Enter Employee Age Here')"
+                    oninput="this.setCustomValidity('')">
+                <span class="input-border"></span>
+            </div>
+            <div class="input-container">
+                <input id="email-input" type="email" name="email" class="form-input" autocomplete="off" th:value="${email}"
+                    placeholder="Email" required oninvalid="this.setCustomValidity('Enter Employee Email Here')"
+                    oninput="this.setCustomValidity('')">
+                <span class="input-border"></span>
+            </div>
+            <div class="input-container">
+                <div class="show-password" onclick="seePassword()">
+                    <svg id="eye" fill="#fff" height="800px" width="800px" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 224.549 224.549" xml:space="preserve">
+                        <g>
+                            <path
+                                d="M223.476,108.41c-1.779-2.96-44.35-72.503-111.202-72.503S2.851,105.45,1.072,108.41c-1.43,2.378-1.43,5.351,0,7.729
+                                        		c1.779,2.96,44.35,72.503,111.202,72.503s109.423-69.543,111.202-72.503C224.906,113.761,224.906,110.788,223.476,108.41z
+                                        		 M112.274,173.642c-49.925,0-86.176-47.359-95.808-61.374c9.614-14.032,45.761-61.36,95.808-61.36
+                                        		c49.925,0,86.176,47.359,95.808,61.374C198.468,126.313,162.321,173.642,112.274,173.642z" />
+                            <path d="M112.274,61.731c-27.869,0-50.542,22.674-50.542,50.543c0,27.868,22.673,50.54,50.542,50.54
+                                        		c27.868,0,50.541-22.672,50.541-50.54C162.815,84.405,140.143,61.731,112.274,61.731z M112.274,147.814
+                                        		c-19.598,0-35.542-15.943-35.542-35.54c0-19.599,15.944-35.543,35.542-35.543s35.541,15.944,35.541,35.543
+                                        		C147.815,131.871,131.872,147.814,112.274,147.814z" />
+                            <path
+                                d="M112.274,92.91c-10.702,0-19.372,8.669-19.372,19.364c0,10.694,8.67,19.363,19.372,19.363
+                                        		c10.703,0,19.373-8.669,19.373-19.363C131.647,101.579,122.977,92.91,112.274,92.91z" />
+                        </g>
+                    </svg>
+                </div>
+                <input id="password-input" type="password" name="senha" class="form-input" autocomplete="off" th:value="${senha}"
+                    placeholder="Password" required style="padding-right: 30px;"
+                    oninvalid="this.setCustomValidity('Employee User Password Here')"
+                    oninput="this.setCustomValidity('')">
+
+                <span class="input-border"></span>
+            </div>
+            <div class="input-container">
+                <button type="submmit" class="btn">
+                    update
+                </button>
+            </div>
+        </form>
+    </div>
+    <script>
+        function seePassword() {
+            const passwordInput = document.getElementById("password-input");
+            const eye_div = document.getElementsByClassName("show-password")[0];
+            const eye = document.getElementById('eye');
+            if (passwordInput.type == `password`) {
+                passwordInput.type = `text`;
+                eye_div.style.filter = `opacity(1)`;
+                eye.style.filter = `grayscale(0)`;
+            } else {
+                passwordInput.type = `password`;
+                eye_div.style.filter = `opacity(.3)`;
+                eye.style.filter = `grayscale(1)`;
+            }
+        }
+    </script>
+</body>
+
+</html>
